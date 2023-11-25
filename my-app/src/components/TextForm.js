@@ -56,6 +56,11 @@ export default function TextForm(props) {
         setText(convertedText)
     }
 
+    // Handle the text preview section's functions
+    const handleTimetoReadWord = 0.008 * (text.trim() === "" ? 0 : text.split(" ").filter(Boolean).length);
+    const handleWordCount = text.trim() === "" ? 0 : text.split(" ").filter(Boolean).length;
+    const handleLetterCount = text.length;
+
 
     return (
 
@@ -82,8 +87,8 @@ export default function TextForm(props) {
                 </div>
                 <div>
                     <h2>Text Summary</h2>
-                    <p>{text.split(" ").length} words & {text.length} letters.</p>
-                    <p>{0.008 * text.split(" ").length} minutes to read.</p>
+                    <p> {handleWordCount} {handleWordCount === 1 ? "word" : "words"} and {handleLetterCount} {handleLetterCount === 1 ? "letter" : "letters"} </p>
+                    <p>{handleTimetoReadWord} minutes to read.</p>
                 </div>
                 <div>
                     <h2>Text Preview</h2>
