@@ -1,14 +1,16 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar.js';
-import About from './components/About.js';
 import TextForm from './components/TextForm.js';
+import About from './components/About.js'
 import Alert from './components/Alert.js';
-import * as ReactDOM from "react-dom/client";
 import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom';
+
+
 
 
 
@@ -29,48 +31,40 @@ function App() {
     }, 2000);
   };
 
-
+  // Function to Handle the Dark and Light modes
   const HandleToggle = () => {
     if (text === "Dark Mode") {
-      setToggleBtn("Dark");
+      setToggleBtn("outline-light");
       setText("Light Mode");
       setMode("dark");
       setBtn("dark");
       showAlert("Dark mode has been enabled.", "Success");
-      document.title = `TextUtils - Home (Dark)`;
     } else {
-      setToggleBtn("Light");
+      setToggleBtn("outline-dark");
       setText("Dark Mode");
       setMode("light");
       setBtn("primary");
       showAlert("Light mode has been enabled.", "Success");
-      document.title = `TextUtils - Home (Light)`;
     }
   };
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <TextForm heading = "Enter The Text Below to Analyze" Btn = {Btn} />,
-    },
-    {
-      path: "/about",
-      element: <About/>,
-    }
-  ]);
-
-  
-
   return (
-    <>
-      <React.StrictMode>
-        <div className={`main main-${mode}`}>
-        <Navbar title = "TextUtils" navBtn2 = "About Us"  mode = {mode} text = {text} ToggleBtn = {ToggleBtn} HandleToggle = {HandleToggle} />
-        <Alert alert = {alert}/>
-        <RouterProvider router={router} />
+    <Router>
+    <div>
+      <Navbar title="TextUtils" navBtn2="About Us" mode={mode} text={text} ToggleBtn={ToggleBtn} HandleToggle={HandleToggle} />
+      <div className={`main main-${mode} py-1`}>
+        <div className="alert-container">
+          <Alert alert={alert} />
         </div>
-      </React.StrictMode>
-    </>
+        <Routes>
+          <Route path = '/' element = {<TextForm heading="Enter The Text Below to Analyze" Btn={Btn} mode={mode} showAlert={showAlert}/>}/>
+          <Route path = '/about' element ={<About/>}/>
+        
+        </Routes>
+
+      </div>
+    </div>
+    </Router>
   );
 }
 
